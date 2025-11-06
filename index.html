@@ -9,8 +9,25 @@
 </head>
 <body>
     
-    <h1>Gestion de Mini trello</h1>
+    <div x-data="{
+        tasks: [
+            { id: 1, title: 'Apprendre Alpine.js', description: 'Faire le TP noté', status: 'À faire' },
+            { id: 2, title: 'Créer le projet', description: 'blablabla', status: 'En cours' },
+            { id: 3, title: 'slkddf', description: 'dfkjsdkjdlkgjl', status: 'À faire' }
+        ]
+    }">
+        <h1>Gestion de Mini trello</h1>
 
+        <div>
+            <template x-for="task in tasks" :key="task.id">
+                <div>
+                    <h3 x-text="task.title"></h3>
+                    <p x-text="task.description"></p>
+                    <span x-text="task.status"></span>
+                </div>
+            </template>
+        </div>
+    </div>
 
 </body>
 </html>
