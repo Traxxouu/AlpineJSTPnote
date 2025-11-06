@@ -46,8 +46,10 @@
             this.saveTasks();
         },
         deleteTask(id) {
-            this.tasks = this.tasks.filter(task => task.id !== id);
-            this.saveTasks();
+            if (confirm('Êtes-vous sûr de vouloir supprimer cette tâche ?')) {
+                this.tasks = this.tasks.filter(task => task.id !== id);
+                this.saveTasks();
+            }
         },
         editTask(id) {
             this.editingId = id;
