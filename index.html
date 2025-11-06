@@ -15,6 +15,7 @@
             title: '',
             description: ''
         },
+        editingId: null,
         init() {
             const saved = localStorage.getItem('tasks');
             if (saved) {
@@ -45,6 +46,13 @@
         deleteTask(id) {
             this.tasks = this.tasks.filter(task => task.id !== id);
             this.saveTasks();
+        },
+        editTask(id) {
+            this.editingId = id;
+        },
+        updateTask(task) {
+            this.editingId = null;
+            this.saveTasks();
         }
     }">
         <h1>Gestion de Mini trello</h1>
@@ -64,10 +72,27 @@
         <div>
             <template x-for="task in tasks" :key="task.id">
                 <div>
-                    <h3 x-text="task.title"></h3>
-                    <p x-text="task.description"></p>
-                    <span x-text="task.status"></span>
-                    <button @click="deleteTask(task.id)">Supprimer</button>
+                    <template x-if="editingId === task.id">
+                        <div>
+                            <input type="text" x-model="task.title">
+                            <textarea x-model="task.description"></textarea>
+                            <select x-model="task.status">
+                                <option>À faire</option>
+                                <option>En cours</option>
+                                <option>Terminé</option>
+                            </select>
+                            <button @click="updateTask(task)">Sauvegarder</button>
+                        </div>
+                    </template>
+                    <template x-if="editingId !== task.id">
+                        <div>
+                            <h3 x-text="task.title"></h3>
+                            <p x-text="task.description"></p>
+                            <span x-text="task.status"></span>
+                            <button @click="editTask(task.id)">Modifier</button>
+                            <button @click="deleteTask(task.id)">Supprimer</button>
+                        </div>
+                    </template>
                 </div>
             </template>
         </div>
