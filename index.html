@@ -23,11 +23,8 @@
             if (saved) {
                 this.tasks = JSON.parse(saved);
             } else {
-                this.tasks = [
-                    { id: 1, title: 'Apprendre Alpine.js', description: 'Faire le TP noté', status: 'À faire' },
-                    { id: 2, title: 'Créer le projet', description: 'blablabla', status: 'En cours' },
-                    { id: 3, title: 'slkddf', description: 'dfkjsdkjdlkgjl', status: 'À faire' }
-                ];
+                // Pas de tâches de démonstration — commencer avec la liste vide
+                this.tasks = [];
                 this.saveTasks();
             }
         },
