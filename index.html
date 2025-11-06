@@ -8,16 +8,28 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-
+    
     <div x-data="{
-        tasks: [
-            { id: 1, title: 'Apprendre Alpine.js', description: 'Faire le TP noté', status: 'À faire' },
-            { id: 2, title: 'Créer le projet', description: 'blablabla', status: 'En cours' },
-            { id: 3, title: 'slkddf', description: 'dfkjsdkjdlkgjl', status: 'À faire' }
-        ],
+        tasks: [],
         newTask: {
             title: '',
             description: ''
+        },
+        init() {
+            const saved = localStorage.getItem('tasks');
+            if (saved) {
+                this.tasks = JSON.parse(saved);
+            } else {
+                this.tasks = [
+                    { id: 1, title: 'Apprendre Alpine.js', description: 'Faire le TP noté', status: 'À faire' },
+                    { id: 2, title: 'Créer le projet', description: 'blablabla', status: 'En cours' },
+                    { id: 3, title: 'slkddf', description: 'dfkjsdkjdlkgjl', status: 'À faire' }
+                ];
+                this.saveTasks();
+            }
+        },
+        saveTasks() {
+            localStorage.setItem('tasks', JSON.stringify(this.tasks));
         },
         addTask() {
             this.tasks.push({
@@ -28,6 +40,7 @@
             });
             this.newTask.title = '';
             this.newTask.description = '';
+            this.saveTasks();
         }
     }">
         <h1>Gestion de Mini trello</h1>
