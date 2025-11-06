@@ -8,15 +8,41 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-    
+
     <div x-data="{
         tasks: [
             { id: 1, title: 'Apprendre Alpine.js', description: 'Faire le TP noté', status: 'À faire' },
             { id: 2, title: 'Créer le projet', description: 'blablabla', status: 'En cours' },
             { id: 3, title: 'slkddf', description: 'dfkjsdkjdlkgjl', status: 'À faire' }
-        ]
+        ],
+        newTask: {
+            title: '',
+            description: ''
+        },
+        addTask() {
+            this.tasks.push({
+                id: Date.now(),
+                title: this.newTask.title,
+                description: this.newTask.description,
+                status: 'À faire'
+            });
+            this.newTask.title = '';
+            this.newTask.description = '';
+        }
     }">
         <h1>Gestion de Mini trello</h1>
+
+        <form @submit.prevent="addTask">
+            <div>
+                <label>Titre</label>
+                <input type="text" x-model="newTask.title" required>
+            </div>
+            <div>
+                <label>Description</label>
+                <textarea x-model="newTask.description" required></textarea>
+            </div>
+            <button type="submit">Ajouter</button>
+        </form>
 
         <div>
             <template x-for="task in tasks" :key="task.id">
