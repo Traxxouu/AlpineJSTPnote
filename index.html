@@ -16,6 +16,7 @@
             description: ''
         },
         editingId: null,
+        filterStatus: 'Tous',
         init() {
             const saved = localStorage.getItem('tasks');
             if (saved) {
@@ -57,9 +58,25 @@
         changeStatus(task, newStatus) {
             task.status = newStatus;
             this.saveTasks();
+        },
+        get filteredTasks() {
+            if (this.filterStatus === 'Tous') {
+                return this.tasks;
+            }
+            return this.tasks.filter(task => task.status === this.filterStatus);
+        },
+        countByStatus(status) {
+            return this.tasks.filter(task => task.status === status).length;
         }
     }">
         <h1>Gestion de Mini trello</h1>
+
+        <div>
+            <button @click="filterStatus = 'Tous'">Tous (<span x-text="tasks.length"></span>)</button>
+            <button @click="filterStatus = 'À faire'">À faire (<span x-text="countByStatus('À faire')"></span>)</button>
+            <button @click="filterStatus = 'En cours'">En cours (<span x-text="countByStatus('En cours')"></span>)</button>
+            <button @click="filterStatus = 'Terminé'">Terminé (<span x-text="countByStatus('Terminé')"></span>)</button>
+        </div>
 
         <form @submit.prevent="addTask">
             <div>
@@ -74,7 +91,7 @@
         </form>
 
         <div>
-            <template x-for="task in tasks" :key="task.id">
+            <template x-for="task in filteredTasks" :key="task.id">
                 <div>
                     <template x-if="editingId === task.id">
                         <div>
