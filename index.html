@@ -17,6 +17,7 @@
         },
         editingId: null,
         filterStatus: 'Tous',
+        searchQuery: '',
         init() {
             const saved = localStorage.getItem('tasks');
             if (saved) {
@@ -60,16 +61,26 @@
             this.saveTasks();
         },
         get filteredTasks() {
-            if (this.filterStatus === 'Tous') {
-                return this.tasks;
+            let filtered = this.tasks;
+            if (this.filterStatus !== 'Tous') {
+                filtered = filtered.filter(task => task.status === this.filterStatus);
             }
-            return this.tasks.filter(task => task.status === this.filterStatus);
+            if (this.searchQuery) {
+                filtered = filtered.filter(task => 
+                    task.title.toLowerCase().includes(this.searchQuery.toLowerCase())
+                );
+            }
+            return filtered;
         },
         countByStatus(status) {
             return this.tasks.filter(task => task.status === status).length;
         }
     }">
         <h1>Gestion de Mini trello</h1>
+
+        <div>
+            <input type="text" x-model="searchQuery" placeholder="Rechercher une tâche...">
+        </div>
 
         <div>
             <button @click="filterStatus = 'Tous'">Tous (<span x-text="tasks.length"></span>)</button>
