@@ -162,6 +162,9 @@
                             </template>
                         </div>
                     </template>
+                    <div x-show="getTasksByStatus('À faire').length === 0" class="text-center text-gray-400 py-8">
+                        Aucune tâche
+                    </div>
                 </div>
             </div>
 
@@ -206,6 +209,9 @@
                             </template>
                         </div>
                     </template>
+                    <div x-show="getTasksByStatus('En cours').length === 0" class="text-center text-gray-400 py-8">
+                        Aucune tâche
+                    </div>
                 </div>
             </div>
 
@@ -250,11 +256,13 @@
                             </template>
                         </div>
                     </template>
+                    <div x-show="getTasksByStatus('Terminé').length === 0" class="text-center text-gray-400 py-8">
+                        Aucune tâche
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
     <footer class="bg-white border-t mt-8">
         <div class="max-w-7xl mx-auto py-4 px-4 text-center text-sm text-gray-600">
