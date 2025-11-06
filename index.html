@@ -8,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-    
+
     <div x-data="{
         tasks: [],
         newTask: {
@@ -41,6 +41,10 @@
             this.newTask.title = '';
             this.newTask.description = '';
             this.saveTasks();
+        },
+        deleteTask(id) {
+            this.tasks = this.tasks.filter(task => task.id !== id);
+            this.saveTasks();
         }
     }">
         <h1>Gestion de Mini trello</h1>
@@ -63,6 +67,7 @@
                     <h3 x-text="task.title"></h3>
                     <p x-text="task.description"></p>
                     <span x-text="task.status"></span>
+                    <button @click="deleteTask(task.id)">Supprimer</button>
                 </div>
             </template>
         </div>
