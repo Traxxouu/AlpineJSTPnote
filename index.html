@@ -8,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-
+    
     <div x-data="{
         tasks: [],
         newTask: {
@@ -53,6 +53,10 @@
         updateTask(task) {
             this.editingId = null;
             this.saveTasks();
+        },
+        changeStatus(task, newStatus) {
+            task.status = newStatus;
+            this.saveTasks();
         }
     }">
         <h1>Gestion de Mini trello</h1>
@@ -88,7 +92,11 @@
                         <div>
                             <h3 x-text="task.title"></h3>
                             <p x-text="task.description"></p>
-                            <span x-text="task.status"></span>
+                            <select x-model="task.status" @change="changeStatus(task, task.status)">
+                                <option>À faire</option>
+                                <option>En cours</option>
+                                <option>Terminé</option>
+                            </select>
                             <button @click="editTask(task.id)">Modifier</button>
                             <button @click="deleteTask(task.id)">Supprimer</button>
                         </div>
